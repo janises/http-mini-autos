@@ -22,6 +22,7 @@ class App extends Component {
     this.filterByColor = this.filterByColor.bind(this);
     this.filterByMake = this.filterByMake.bind(this);
     this.updatePrice = this.updatePrice.bind(this);
+    this.deleteBuyer = this.deleteBuyer.bind(this);
   }
 
   componentDidMount() {
@@ -143,6 +144,16 @@ addBuyer() {
       }
     })
 }
+  
+  deleteBuyer(id) {
+    axios.delete(this.state.vehicleURL + "/api/buyers/" +id)
+      .then((response)=> {
+        this.setState({
+          buyersToDisplay: response.data.buyers
+        })
+      })
+  }
+
 
 
   render() {
@@ -174,7 +185,7 @@ addBuyer() {
           <p>Name: {person.name}</p>
           <p>Phone: {person.phone}</p>
           <p>Address: {person.address}</p>
-          <button>No longer interested</button>
+          <button onClick={()=> this.deleteBuyer(person.id)}>No longer interested</button>
           <hr className='hr' />
         </div> 
       )
